@@ -56,3 +56,23 @@ function startErase() {
 function eraseColor(e) {
     e.target.style.backgroundColor = 'white';
 }
+
+isRandomActive = false;
+
+const randomButton = document.querySelector('.random');
+
+randomButton.addEventListener('click', () => {
+    startRandom();
+});
+
+function startRandom() {
+    isRandomActive = !isRandomActive;
+    if (!isRandomActive) {
+        canvas.removeEventListener('mouseover', randomColor);
+    }
+    canvas.addEventListener('click', randomColor);
+}
+
+function randomColor(e) {
+    e.target.style.backgroundColor = 'red';
+}
