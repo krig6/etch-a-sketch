@@ -33,3 +33,8 @@ label {
 .canvas.gridlines > div {
   outline: 1.5px solid black;
 }
+
+button,
+input {
+  cursor: pointer;
+}

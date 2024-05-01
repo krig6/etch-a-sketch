@@ -6,18 +6,22 @@ const clearButton = document.querySelector('.clear');
 const getPenColor = document.querySelector('#pen-color');
 const getCanvasColor = document.querySelector('#canvas-color');
 const gridButton = document.querySelector('.grid-lines')
+const sliderValue = document.querySelector('#slider-label');
+const slider = document.querySelector('#slider');
+
 
 isPenActive = false;
 isEraserActive = false;
 isRandomActive = false;
 
 getCanvasColor.addEventListener('change', () => {
-    createGrid(12);
+    createGrid(slider.value);
 })
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     canvas.innerHTML = "";
+
     let amount = size * size;
 
     for (let i = 1; i <= amount; i++) {
@@ -28,7 +32,13 @@ function createGrid(size) {
     }
 }
 // Initial grid: 12x12
-createGrid(12);
+createGrid(slider.value);
+
+slider.addEventListener('input', () => {
+    sliderValue.textContent = `Canvas size: ${slider.value} x ${slider.value}`;
+    createGrid(slider.value);
+});
+
 
 gridButton.addEventListener('click', () => {
     canvas.classList.toggle("gridlines");
@@ -66,6 +76,7 @@ clearButton.addEventListener('click', () => {
     }
     isRandomActive = false;
     isPenActive = false;
+
 });
 
 

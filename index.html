@@ -12,15 +12,21 @@
     <div class="container">
         <div class="canvas"></div>
         <div class="buttons">
-            <label for="pen-color">Pen Color</label>
-            <input type="color" id="pen-color" value="#000000">
-            <label for="canvas-color">Canvas Color</label>
-            <input type="color" id="canvas-color" value="#ffffff">
-            <button class="draw">Pen</button>
-            <button class="random">Random</button>
-            <button class="eraser">Eraser</button>
-            <button class="clear">Clear</button>
-            <button class="grid-lines">Grid</button>
+            <div class="input">
+                <label for="slider" id="slider-label">Canvas Size: 12x12</label>
+                <input type="range" id="slider" value="16" min="12" max="100" step="1">
+                <label for="pen-color">Pen Color:</label>
+                <input type="color" id="pen-color" value="#000000">
+                <label for="canvas-color">Canvas Color:</label>
+                <input type="color" id="canvas-color" value="#ffffff">
+            </div>
+            <div class="toggle">
+                <button class="draw">Pen</button>
+                <button class="random">Random</button>
+                <button class="eraser">Eraser</button>
+                <button class="clear">Clear</button>
+                <button class="grid-lines">Grid</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
