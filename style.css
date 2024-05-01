@@ -26,3 +26,8 @@ body {
   justify-content: center;
   gap: 10px;
 }
+
+label {
+  display: flex;
+  align-items: center;
+}

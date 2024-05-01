@@ -2,10 +2,14 @@ const canvas = document.querySelector('.canvas');
 const drawButton = document.querySelector('.draw');
 const randomButton = document.querySelector('.random');
 const eraserButton = document.querySelector('.eraser');
+const getPenColor = document.querySelector('#pen-color');
+const getCanvasColor = document.querySelector('#canvas-color');
 
 isPenActive = false;
 isEraserActive = false;
 isRandomActive = false;
+
+
 
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -15,7 +19,7 @@ function createGrid(size) {
 
     for (let i = 1; i <= amount; i++) {
         let squares = document.createElement('div');
-        squares.style.backgroundColor = "white";
+        squares.style.backgroundColor = getCanvasColor.value;
         squares.style.border = '1px solid black';
         canvas.insertAdjacentElement('beforeend', squares);
     }
@@ -49,7 +53,7 @@ eraserButton.addEventListener('click', () => {
 
 
 function colorGrid(e) {
-    e.target.style.backgroundColor = 'black';
+    e.target.style.backgroundColor = getPenColor.value;
 }
 
 function startPen(e) {
@@ -58,7 +62,7 @@ function startPen(e) {
         canvas.removeEventListener('mouseover', colorGrid);
         return;
     }
-    e.target.style.backgroundColor = 'black'
+    e.target.style.backgroundColor = getPenColor.value;
     canvas.addEventListener('mouseover', colorGrid);
 }
 
@@ -97,7 +101,7 @@ function stopRandom() {
 }
 
 function eraseColor(e) {
-    e.target.style.backgroundColor = 'white';
+    e.target.style.backgroundColor = getCanvasColor.value;
 }
 
 function startErase() {
@@ -114,7 +118,7 @@ function eraseGrid(e) {
         canvas.removeEventListener('mouseover', eraseColor);
         return;
     }
-    e.target.style.backgroundColor = 'white'
+    e.target.style.backgroundColor = getCanvasColor.value
     canvas.addEventListener('mouseover', eraseColor);
 }
 
