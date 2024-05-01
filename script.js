@@ -1,4 +1,6 @@
 const canvas = document.querySelector('.canvas');
+const eraserButton = document.querySelector('.eraser');
+const randomButton = document.querySelector('.random');
 
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -21,6 +23,15 @@ isPenActive = false;
 const drawButton = document.querySelector('.draw');
 
 drawButton.addEventListener('click', () => {
+    if (isEraserActive) stopErase();
+    stopRandom();
+});
+
+eraserButton.addEventListener('click', () => {
+    startErase();
+});
+randomButton.addEventListener('click', () => {
+    if (isEraserActive) stopErase();
     startPen();
 });
 
@@ -33,17 +44,37 @@ function startPen() {
     canvas.addEventListener('click', colorGrid);
 }
 
+function stopPen() {
+    canvas.removeEventListener('click', startPen);
+
+    if (isPenActive) isPenActive = false;
+    if (isRandomActive) isRandomActive = false;
+
+    canvas.addEventListener('click', startRandom);
+}
+
+function stopErase() {
+    isEraserActive = false;
+    canvas.removeEventListener('click', startErase);
+}
+
+function stopRandom() {
+    canvas.removeEventListener('click', startRandom);
+
+    if (isPenActive) isPenActive = false;
+    if (isRandomActive) isRandomActive = false;
+    canvas.addEventListener('click', startPen);
+}
+
 function colorGrid(e) {
     e.target.style.backgroundColor = 'black';
 }
 
 isEraserActive = false;
 
-const eraserButton = document.querySelector('.eraser');
 
-eraserButton.addEventListener('click', () => {
-    startErase();
-});
+
+
 
 function startErase() {
     isEraserActive = !isEraserActive;
@@ -59,11 +90,9 @@ function eraseColor(e) {
 
 isRandomActive = false;
 
-const randomButton = document.querySelector('.random');
 
-randomButton.addEventListener('click', () => {
-    startRandom();
-});
+
+
 
 function startRandom() {
     isRandomActive = !isRandomActive;
