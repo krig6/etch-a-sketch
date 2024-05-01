@@ -24,7 +24,7 @@ button,
 input {
   cursor: pointer;
   font-family: "EASTRIAL";
-  padding: 5px 0px;
+  padding: 4px 0px;
 }
 
 input {
@@ -45,7 +45,7 @@ button {
   background-color: transparent;
   color: #e5a632;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 900;
   border: 2px solid #e5a632;
   border-radius: 5px;
   transition: all 0.3s ease;

@@ -1,3 +1,4 @@
+// DOM element selectors
 const canvas = document.querySelector('.canvas');
 const drawButton = document.querySelector('.draw');
 const randomButton = document.querySelector('.random');
@@ -9,21 +10,20 @@ const gridButton = document.querySelector('.grid-lines')
 const sliderValue = document.querySelector('#slider-label');
 const slider = document.querySelector('#slider');
 
+// Initial grid
+createGrid(slider.value);
 
+// Variables to track tool states
 isPenActive = false;
 isEraserActive = false;
 isRandomActive = false;
 
-getCanvasColor.addEventListener('change', () => {
-    createGrid(slider.value);
-})
+// Function to create grid based on size input
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     canvas.innerHTML = "";
-
     let amount = size * size;
-
     for (let i = 1; i <= amount; i++) {
         let squares = document.createElement('div');
         squares.style.backgroundColor = getCanvasColor.value;
@@ -31,19 +31,8 @@ function createGrid(size) {
         canvas.insertAdjacentElement('beforeend', squares);
     }
 }
-// Initial grid: 12x12
-createGrid(slider.value);
 
-slider.addEventListener('input', () => {
-    sliderValue.textContent = `Canvas size: ${slider.value} x ${slider.value}`;
-    createGrid(slider.value);
-});
-
-
-gridButton.addEventListener('click', () => {
-    canvas.classList.toggle("gridlines");
-});
-
+// Event listeners
 drawButton.addEventListener('click', () => {
     if (isEraserActive) stopErase();
     stopRandom();
@@ -76,14 +65,22 @@ clearButton.addEventListener('click', () => {
     }
     isRandomActive = false;
     isPenActive = false;
-
 });
 
+getCanvasColor.addEventListener('change', () => {
+    createGrid(slider.value);
+})
 
-function colorGrid(e) {
-    e.target.style.backgroundColor = getPenColor.value;
-}
+slider.addEventListener('input', () => {
+    sliderValue.textContent = `${slider.value} x ${slider.value}`;
+    createGrid(slider.value);
+});
 
+gridButton.addEventListener('change', () => {
+    canvas.classList.toggle("gridlines");
+});
+
+// Functions for drawing with pen button
 function startPen(e) {
     isPenActive = !isPenActive;
     if (!isPenActive) {
@@ -97,17 +94,16 @@ function startPen(e) {
 function stopPen() {
     canvas.removeEventListener('click', startPen);
     canvas.removeEventListener('mouseover', colorGrid);
-
     if (isPenActive) isPenActive = false;
     if (isRandomActive) isRandomActive = false;
-
     canvas.addEventListener('click', startRandom);
 }
 
-function randomColor(e) {
-    e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+function colorGrid(e) {
+    e.target.style.backgroundColor = getPenColor.value;
 }
 
+// Functions for drawing with random button
 function startRandom(e) {
     isRandomActive = !isRandomActive;
     if (!isRandomActive) {
@@ -121,16 +117,16 @@ function startRandom(e) {
 function stopRandom() {
     canvas.removeEventListener('click', startRandom);
     canvas.removeEventListener('mouseover', randomColor);
-
     if (isPenActive) isPenActive = false;
     if (isRandomActive) isRandomActive = false;
-
     canvas.addEventListener('click', startPen);
 }
 
-function eraseColor(e) {
-    e.target.style.backgroundColor = getCanvasColor.value;
+function randomColor(e) {
+    e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
 }
+
+// Functions for erase button
 
 function startErase() {
     canvas.removeEventListener('mouseover', colorGrid);
@@ -138,6 +134,12 @@ function startErase() {
     canvas.removeEventListener('mouseover', randomColor);
     canvas.removeEventListener('click', startRandom);
     canvas.addEventListener('click', eraseGrid)
+}
+
+function stopErase() {
+    isEraserActive = false;
+    canvas.removeEventListener('click', eraseGrid);
+    canvas.removeEventListener('mouseover', eraseColor);
 }
 
 function eraseGrid(e) {
@@ -150,11 +152,8 @@ function eraseGrid(e) {
     canvas.addEventListener('mouseover', eraseColor);
 }
 
-function stopErase() {
-    isEraserActive = false;
-    canvas.removeEventListener('click', eraseGrid);
-    canvas.removeEventListener('mouseover', eraseColor);
+function eraseColor(e) {
+    e.target.style.backgroundColor = getCanvasColor.value;
 }
-
 
 
