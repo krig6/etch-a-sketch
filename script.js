@@ -9,12 +9,14 @@ isPenActive = false;
 isEraserActive = false;
 isRandomActive = false;
 
-
+getCanvasColor.addEventListener('input', () => {
+    createGrid(12);
+})
 
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-
+    canvas.innerHTML = "";
     let amount = size * size;
 
     for (let i = 1; i <= amount; i++) {
