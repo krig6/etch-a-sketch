@@ -14,4 +14,25 @@ function createGrid(size) {
     }
 }
 
+// Initial grid: 12x12
 createGrid(12);
+
+isPenActive = false;
+const drawButton = document.querySelector('.draw');
+
+drawButton.addEventListener('click', () => {
+    startPen();
+});
+
+function startPen() {
+    isPenActive = !isPenActive;
+    if (!isPenActive) {
+        canvas.removeEventListener('mouseover', colorGrid);
+        return;
+    }
+    canvas.addEventListener('click', colorGrid);
+}
+
+function colorGrid(e) {
+    e.target.style.backgroundColor = 'black';
+}
