@@ -36,3 +36,23 @@ function startPen() {
 function colorGrid(e) {
     e.target.style.backgroundColor = 'black';
 }
+
+isEraserActive = false;
+
+const eraserButton = document.querySelector('.eraser');
+
+eraserButton.addEventListener('click', () => {
+    startErase();
+});
+
+function startErase() {
+    isEraserActive = !isEraserActive;
+    if (!isEraserActive) {
+        canvas.removeEventListener('mouseover', eraseColor);
+    }
+    canvas.addEventListener('click', eraseColor);
+}
+
+function eraseColor(e) {
+    e.target.style.backgroundColor = 'white';
+}
