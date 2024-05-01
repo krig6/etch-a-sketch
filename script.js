@@ -27,14 +27,26 @@ createGrid(12);
 drawButton.addEventListener('click', () => {
     if (isEraserActive) stopErase();
     stopRandom();
+    drawButton.disabled = true;
+    randomButton.disabled = false;
+    eraserButton.disabled = false;
 });
 
 randomButton.addEventListener('click', () => {
     if (isEraserActive) stopErase();
     stopPen();
+    randomButton.disabled = true;
+    drawButton.disabled = false;
+    eraserButton.disabled = false;
 });
 
-eraserButton.addEventListener('click', startErase);
+eraserButton.addEventListener('click', () => {
+    startErase();
+    randomButton.disabled = false;
+    drawButton.disabled = false;
+    eraserButton.disabled = true;
+});
+
 
 function colorGrid(e) {
     e.target.style.backgroundColor = 'black';
@@ -89,9 +101,9 @@ function eraseColor(e) {
 }
 
 function startErase() {
-    canvas.removeEventListener('mouseover', startPen);
+    canvas.removeEventListener('mouseover', colorGrid);
     canvas.removeEventListener('click', startPen);
-    canvas.removeEventListener('mouseover', startRandom);
+    canvas.removeEventListener('mouseover', randomColor);
     canvas.removeEventListener('click', startRandom);
     canvas.addEventListener('click', eraseGrid)
 }
