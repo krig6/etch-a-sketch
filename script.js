@@ -4,15 +4,15 @@ const randomButton = document.querySelector('.random');
 const eraserButton = document.querySelector('.eraser');
 const getPenColor = document.querySelector('#pen-color');
 const getCanvasColor = document.querySelector('#canvas-color');
+const gridButton = document.querySelector('.grid-lines')
 
 isPenActive = false;
 isEraserActive = false;
 isRandomActive = false;
 
-getCanvasColor.addEventListener('input', () => {
+getCanvasColor.addEventListener('change', () => {
     createGrid(12);
 })
-
 function createGrid(size) {
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
@@ -22,13 +22,17 @@ function createGrid(size) {
     for (let i = 1; i <= amount; i++) {
         let squares = document.createElement('div');
         squares.style.backgroundColor = getCanvasColor.value;
-        squares.style.border = '1px solid black';
+        squares.className = 'box'
+
         canvas.insertAdjacentElement('beforeend', squares);
     }
 }
-
 // Initial grid: 12x12
 createGrid(12);
+
+gridButton.addEventListener('click', () => {
+    canvas.classList.toggle("gridlines");
+});
 
 drawButton.addEventListener('click', () => {
     if (isEraserActive) stopErase();
@@ -79,7 +83,7 @@ function stopPen() {
 }
 
 function randomColor(e) {
-    e.target.style.backgroundColor = 'red';
+    e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
 }
 
 function startRandom(e) {
@@ -88,7 +92,7 @@ function startRandom(e) {
         canvas.removeEventListener('mouseover', randomColor);
         return;
     }
-    e.target.style.backgroundColor = 'red';
+    e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
     canvas.addEventListener('mouseover', randomColor);
 }
 
@@ -127,7 +131,7 @@ function eraseGrid(e) {
 function stopErase() {
     isEraserActive = false;
     canvas.removeEventListener('click', eraseGrid);
-    canvas.removeEventListener('mouseover', eraseGrid);
+    canvas.removeEventListener('mouseover', eraseColor);
 }
 
 

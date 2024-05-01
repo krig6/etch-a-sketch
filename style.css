@@ -16,11 +16,9 @@ body {
   height: 500px;
   width: 500px;
   background-color: white;
-  border: 1px solid black;
   margin-bottom: 20px;
   display: grid;
 }
-
 .buttons {
   display: flex;
   justify-content: center;
@@ -30,4 +28,8 @@ body {
 label {
   display: flex;
   align-items: center;
+}
+
+.canvas.gridlines > div {
+  outline: 1.5px solid black;
 }
