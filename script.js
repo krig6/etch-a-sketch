@@ -32,16 +32,35 @@ eraserButton.addEventListener('click', () => {
 });
 randomButton.addEventListener('click', () => {
     if (isEraserActive) stopErase();
-    startPen();
+    stopPen();
 });
 
-function startPen() {
+function startPen(e) {
     isPenActive = !isPenActive;
     if (!isPenActive) {
         canvas.removeEventListener('mouseover', colorGrid);
         return;
     }
-    canvas.addEventListener('click', colorGrid);
+    e.target.style.backgroundColor = 'black'
+    canvas.addEventListener('mouseover', colorGrid);
+}
+function stopRandom() {
+    canvas.removeEventListener('click', startRandom);
+
+    if (isPenActive) isPenActive = false;
+    if (isRandomActive) isRandomActive = false;
+    canvas.addEventListener('click', startPen);
+}
+
+
+function startErase(e) {
+    isEraserActive = !isEraserActive;
+    if (!isEraserActive) {
+        canvas.removeEventListener('mouseover', eraseColor);
+        return;
+    }
+    e.target.style.backgroundColor = 'white'
+    canvas.addEventListener('mouseover', eraseColor);
 }
 
 function stopPen() {
@@ -58,13 +77,7 @@ function stopErase() {
     canvas.removeEventListener('click', startErase);
 }
 
-function stopRandom() {
-    canvas.removeEventListener('click', startRandom);
 
-    if (isPenActive) isPenActive = false;
-    if (isRandomActive) isRandomActive = false;
-    canvas.addEventListener('click', startPen);
-}
 
 function colorGrid(e) {
     e.target.style.backgroundColor = 'black';
@@ -74,16 +87,6 @@ isEraserActive = false;
 
 
 
-
-
-function startErase() {
-    isEraserActive = !isEraserActive;
-    if (!isEraserActive) {
-        canvas.removeEventListener('mouseover', eraseColor);
-    }
-    canvas.addEventListener('click', eraseColor);
-}
-
 function eraseColor(e) {
     e.target.style.backgroundColor = 'white';
 }
@@ -91,15 +94,14 @@ function eraseColor(e) {
 isRandomActive = false;
 
 
-
-
-
-function startRandom() {
+function startRandom(e) {
     isRandomActive = !isRandomActive;
     if (!isRandomActive) {
         canvas.removeEventListener('mouseover', randomColor);
+        return;
     }
-    canvas.addEventListener('click', randomColor);
+    e.target.style.backgroundColor = 'red';
+    canvas.addEventListener('mouseover', randomColor);
 }
 
 function randomColor(e) {
