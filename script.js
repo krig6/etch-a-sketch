@@ -2,6 +2,7 @@ const canvas = document.querySelector('.canvas');
 const drawButton = document.querySelector('.draw');
 const randomButton = document.querySelector('.random');
 const eraserButton = document.querySelector('.eraser');
+const clearButton = document.querySelector('.clear');
 const getPenColor = document.querySelector('#pen-color');
 const getCanvasColor = document.querySelector('#canvas-color');
 const gridButton = document.querySelector('.grid-lines')
@@ -23,7 +24,6 @@ function createGrid(size) {
         let squares = document.createElement('div');
         squares.style.backgroundColor = getCanvasColor.value;
         squares.className = 'box'
-
         canvas.insertAdjacentElement('beforeend', squares);
     }
 }
@@ -55,6 +55,17 @@ eraserButton.addEventListener('click', () => {
     randomButton.disabled = false;
     drawButton.disabled = false;
     eraserButton.disabled = true;
+});
+
+clearButton.addEventListener('click', () => {
+    canvas.removeEventListener('mouseover', colorGrid);
+    canvas.removeEventListener('mouseover', randomColor);
+    let selectAllBox = document.querySelectorAll('.box');
+    for (let box of selectAllBox) {
+        box.style.backgroundColor = getCanvasColor.value;
+    }
+    isRandomActive = false;
+    isPenActive = false;
 });
 
 
