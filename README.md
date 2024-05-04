@@ -8,7 +8,7 @@ You can unleash your creativity [here](https://krig6.github.io/etch-a-sketch/).
 
 ## Sample Art
 
-[[Iron Man]](./sample-ironman.png)
+![Iron Man](./sample-ironman.png)
 
 ## Technologies Used
 
