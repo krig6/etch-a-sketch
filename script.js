@@ -1,22 +1,20 @@
 // DOM element selectors
 const canvas = document.querySelector('.canvas');
-const drawButton = document.querySelector('.draw');
-const randomButton = document.querySelector('.random');
-const eraserButton = document.querySelector('.eraser');
-const clearButton = document.querySelector('.clear');
-const getPenColor = document.querySelector('#pen-color');
-const getCanvasColor = document.querySelector('#canvas-color');
-const gridButton = document.querySelector('.grid-lines')
-const sliderValue = document.querySelector('#slider-label');
-const slider = document.querySelector('#slider');
+const buttons = document.querySelector('.drawing-buttons');
+const clearButton = document.querySelector('#clear');
+const penSwatch = document.querySelector('#pen-swatch');
+const canvasSwatch = document.querySelector('#canvas-swatch');
+const canvasSizeSlider = document.querySelector('#canvas-size-slider');
+const canvasSizeSliderLabel = document.querySelector('#canvas-size-slider-label');
+const gridlinesToggle = document.querySelector('#toggle-grid');
 
 // Initial grid
-createGrid(slider.value);
+createGrid(canvasSizeSlider.value);
 
 // Variables to track tool states
-isPenActive = false;
-isEraserActive = false;
-isRandomActive = false;
+let isPenActive = false;
+let isRandomPenActive = false;
+let isEraserActive = false;
 
 // Function to create grid based on size input
 function createGrid(size) {
@@ -26,117 +24,118 @@ function createGrid(size) {
     let amount = size * size;
     for (let i = 1; i <= amount; i++) {
         let squares = document.createElement('div');
-        squares.style.backgroundColor = getCanvasColor.value;
-        squares.className = 'box'
+        squares.style.backgroundColor = canvasSwatch.value;
+        squares.className = 'box';
         canvas.insertAdjacentElement('beforeend', squares);
     }
 }
-
-// Event listeners
-drawButton.addEventListener('click', () => {
-    if (isEraserActive) stopErase();
-    stopRandom();
-    drawButton.disabled = true;
-    randomButton.disabled = false;
-    eraserButton.disabled = false;
+// Main buttons event delegation
+buttons.addEventListener('click', (event) => {
+    let target = event.target;
+    // Enable all buttons initially
+    Array.from(buttons.children).forEach(button => {
+        button.disabled = false;
+    });
+    // Execute actions based on the clicked button
+    switch (target.id) {
+        case 'pen':
+            if (isEraserActive) stopEraser();
+            stopRandomPen();
+            target.disabled = true;
+            break;
+        case 'random':
+            if (isEraserActive) stopEraser();
+            stopPen();
+            target.disabled = true;
+            break;
+        case 'eraser':
+            startEraser();
+            target.disabled = true;
+            break;
+    }
 });
 
-randomButton.addEventListener('click', () => {
-    if (isEraserActive) stopErase();
-    stopPen();
-    randomButton.disabled = true;
-    drawButton.disabled = false;
-    eraserButton.disabled = false;
+// Event listeners for other buttons
+canvasSwatch.addEventListener('change', () => {
+    createGrid(canvasSizeSlider.value);
 });
 
-eraserButton.addEventListener('click', () => {
-    startErase();
-    randomButton.disabled = false;
-    drawButton.disabled = false;
-    eraserButton.disabled = true;
+canvasSizeSlider.addEventListener('input', () => {
+    canvasSizeSliderLabel.textContent = `${canvasSizeSlider.value} x ${canvasSizeSlider.value}`;
+    createGrid(canvasSizeSlider.value);
+});
+
+gridlinesToggle.addEventListener('click', () => {
+    canvas.classList.toggle("gridlines");
 });
 
 clearButton.addEventListener('click', () => {
-    canvas.removeEventListener('mouseover', colorGrid);
-    canvas.removeEventListener('mouseover', randomColor);
+    canvas.removeEventListener('mouseover', colorGridWithPen);
+    canvas.removeEventListener('mouseover', colorGridWithRandom);
     let selectAllBox = document.querySelectorAll('.box');
     for (let box of selectAllBox) {
-        box.style.backgroundColor = getCanvasColor.value;
+        box.style.backgroundColor = canvasSwatch.value;
     }
-    isRandomActive = false;
     isPenActive = false;
-});
-
-getCanvasColor.addEventListener('change', () => {
-    createGrid(slider.value);
-})
-
-slider.addEventListener('input', () => {
-    sliderValue.textContent = `${slider.value} x ${slider.value}`;
-    createGrid(slider.value);
-});
-
-gridButton.addEventListener('change', () => {
-    canvas.classList.toggle("gridlines");
+    isRandomPenActive = false;
 });
 
 // Functions for drawing with pen button
 function startPen(e) {
     isPenActive = !isPenActive;
     if (!isPenActive) {
-        canvas.removeEventListener('mouseover', colorGrid);
+        canvas.removeEventListener('mouseover', colorGridWithPen);
         return;
     }
-    e.target.style.backgroundColor = getPenColor.value;
-    canvas.addEventListener('mouseover', colorGrid);
+    e.target.style.backgroundColor = penSwatch.value;
+    canvas.addEventListener('mouseover', colorGridWithPen);
 }
 
 function stopPen() {
     canvas.removeEventListener('click', startPen);
-    canvas.removeEventListener('mouseover', colorGrid);
+    canvas.removeEventListener('mouseover', colorGridWithPen);
     if (isPenActive) isPenActive = false;
-    if (isRandomActive) isRandomActive = false;
-    canvas.addEventListener('click', startRandom);
+    if (isRandomPenActive) isRandomPenActive = false;
+    canvas.addEventListener('click', startRandomPen);
 }
 
-function colorGrid(e) {
-    e.target.style.backgroundColor = getPenColor.value;
+function colorGridWithPen(e) {
+    e.target.style.backgroundColor = penSwatch.value;
 }
 
 // Functions for drawing with random button
-function startRandom(e) {
-    isRandomActive = !isRandomActive;
-    if (!isRandomActive) {
-        canvas.removeEventListener('mouseover', randomColor);
+function startRandomPen(e) {
+    isRandomPenActive = !isRandomPenActive;
+    if (!isRandomPenActive) {
+        canvas.removeEventListener('mouseover', colorGridWithRandom);
         return;
     }
     e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-    canvas.addEventListener('mouseover', randomColor);
+    canvas.addEventListener('mouseover', colorGridWithRandom);
 }
 
-function stopRandom() {
-    canvas.removeEventListener('click', startRandom);
-    canvas.removeEventListener('mouseover', randomColor);
+function stopRandomPen() {
+    canvas.removeEventListener('click', startRandomPen);
+    canvas.removeEventListener('mouseover', colorGridWithRandom);
     if (isPenActive) isPenActive = false;
-    if (isRandomActive) isRandomActive = false;
+    if (isRandomPenActive) isRandomPenActive = false;
     canvas.addEventListener('click', startPen);
 }
 
-function randomColor(e) {
+function colorGridWithRandom(e) {
     e.target.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
 }
 
 // Functions for erase button
-
-function startErase() {
-    canvas.removeEventListener('mouseover', colorGrid);
+function startEraser() {
+    canvas.removeEventListener('mouseover', colorGridWithPen);
     canvas.removeEventListener('click', startPen);
-    canvas.removeEventListener('mouseover', randomColor);
-    canvas.removeEventListener('click', startRandom);
-    canvas.addEventListener('click', eraseGrid)
+    canvas.removeEventListener('mouseover', colorGridWithRandom);
+    canvas.removeEventListener('click', startRandomPen);
+    canvas.addEventListener('click', eraseGrid);
 }
 
-function stopErase() {
+function stopEraser() {
     isEraserActive = false;
     canvas.removeEventListener('click', eraseGrid);
     canvas.removeEventListener('mouseover', eraseColor);
@@ -148,12 +147,10 @@ function eraseGrid(e) {
         canvas.removeEventListener('mouseover', eraseColor);
         return;
     }
-    e.target.style.backgroundColor = getCanvasColor.value
+    e.target.style.backgroundColor = canvasSwatch.value;
     canvas.addEventListener('mouseover', eraseColor);
 }
 
 function eraseColor(e) {
-    e.target.style.backgroundColor = getCanvasColor.value;
+    e.target.style.backgroundColor = canvasSwatch.value;
 }
-
-
