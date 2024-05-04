@@ -6,37 +6,87 @@
 
 @font-face {
   font-family: "EASTRIAL";
-  src: url("./font/EASTRIAL.ttf") format(truetype);
+  src: url(./font/EASTRIAL.ttf) format(truetype);
 }
 
 body {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
   background-color: #546a7b;
   color: #e5a632;
+  font-family: "EASTRIAL";
   gap: 50px;
-  font-family: "EASTRIAL";
 }
 
-button,
-input {
-  cursor: pointer;
-  font-family: "EASTRIAL";
-  padding: 4px 0px;
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 55px;
+  margin-bottom: 15px;
 }
 
-input {
+.canvas {
+  display: grid;
+  height: 600px;
+  width: 600px;
+  border: 5px solid gray;
+}
+
+.canvas.gridlines > div {
+  outline: 1px solid gray;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  gap: 35px;
+}
+
+.drawing-buttons,
+.additional-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.canvas-size-slider-and-label,
+.pen-swatch-and-label,
+.canvas-swatch-and-label,
+.toggle-grid-and-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.color-swatch-and-label {
+  display: flex;
+  gap: 20px;
+}
+
+#pen-swatch,
+#canvas-swatch {
+  height: 50px;
+  width: 100px;
+  outline: none;
   background: none;
   border: none;
-  margin-bottom: 30px;
-  /* outline: none; */
-}
-label {
-  display: flex;
-  align-items: center;
-  font-weight: 900;
 }
 
 button {
@@ -44,73 +94,64 @@ button {
   width: 100px;
   background-color: transparent;
   color: #e5a632;
+  font-family: "EASTRIAL";
   font-size: 18px;
   font-weight: 900;
   border: 2px solid #e5a632;
   border-radius: 5px;
-  transition: all 0.3s ease;
+  padding: 4px 0px;
 }
+
+button,
+input {
+  cursor: pointer;
+}
+
 button:disabled {
   background-color: #e5a632;
   color: #546a7b;
   border-color: #546a7b;
 }
 
-#pen-color,
-#canvas-color {
-  height: 50px;
-  width: 120px;
-  padding: 0;
-}
-
-.title {
-  font-size: 45px;
-  margin-bottom: 15px;
-}
-
-.canvas.gridlines > div {
-  outline: 1.5px solid black;
-}
-
-.container {
+.toggle-grid-label {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
 }
 
-.canvas {
-  display: grid;
-  height: 500px;
-  width: 500px;
+#toggle-grid {
+  display: none;
+}
+
+.toggle-grid-slide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: row nowrap;
+  cursor: pointer;
+  height: 20px;
+  width: 40px;
+  background-color: gray;
+  border-radius: 10px;
+}
+
+.toggle-grid-circle {
+  height: 14px;
+  width: 14px;
   background-color: white;
-  margin-bottom: 20px;
+  margin: 0 3px;
+  border-radius: 50%;
+  transition: background-color 0.1s;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+#toggle-grid:checked + .toggle-grid-slide {
+  background-color: #e5a632;
+  justify-content: flex-end;
 }
 
-.toggle {
-  display: flex;
-  gap: 20px;
-}
-
-.input {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Style the custom thumb */
-/* Set the color of the slider's thumb */
 input[type="range"] {
   /* Hides the default slider styling */
-  -webkit-appearance: none;
-  -moz-apperance: none;
   appearance: none;
   /* Set the dimensions of the slider */
   width: 100%;
@@ -122,59 +163,10 @@ input[type="range"] {
 
 /* Styling the thumb (circle) */
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
-  background: white; /* Change to the desired color */
+  cursor: pointer;
+  background: white; /* Color of the circle */
   border-radius: 50%; /* Ensures it's a circle */
-  cursor: pointer;
-}
-
-.grid-lines {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 30px;
-  cursor: pointer;
-}
-
-#slider-label {
-  margin-bottom: 5px;
-}
-
-.grid-lines input {
-  display: none;
-}
-
-.grid-lines .slider {
-  display: inline-block;
-  position: relative;
-  width: 45px;
-  height: 15px;
-  background-color: #ccc;
-  border-radius: 15px;
-  transition: background-color 0.3s;
-}
-
-.grid-lines .slider:before {
-  position: absolute;
-  content: "";
-  width: 15px;
-  height: 15px;
-  top: 0px;
-  left: 0px;
-  background-color: white;
-  border-radius: 50%;
-  transition: transform 0.3s;
-}
-
-.grid-lines input:checked + .slider:before {
-  transform: translateX(30px);
-}
-
-/* Change the background color of the slider for the "on" state */
-.grid-lines input:checked + .slider {
-  background-color: #e5a632;
 }

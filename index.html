@@ -11,27 +11,40 @@
 
 <body>
     <div class="container">
-        <div class="title">Etch-a-Sketch</div>
-        <div class="canvas"></div>
-        <div class="toggle">
-            <button class="draw">Pen</button>
-            <button class="random">Random</button>
-            <button class="eraser">Eraser</button>
-            <button class="clear">Clear</button>
+        <div class="title-and-canvas">
+            <div class="title">Etch-a-Sketch</div>
+            <div class="canvas"></div>
         </div>
-    </div>
-    <div class="buttons">
-        <div class="input">
-            <label class="grid-lines">Gridlines
-                <input type="checkbox" class="grid-lines" id="checkbox" />
-                <span class="slider"></span>
-            </label>
-            <label for="slider" id="slider-label">12 x 12</label>
-            <input type="range" id="slider" value="12" min="12" max="100" step="1" />
-            <label for="pen-color">Pen Color</label>
-            <input type="color" id="pen-color" value="#E5A632" />
-            <label for="canvas-color">Canvas Color</label>
-            <input type="color" id="canvas-color" value="#FFD9A3" />
+        <div class="tools">
+            <div class="drawing-buttons">
+                <button id="pen">Pen</button>
+                <button id="random">Random</button>
+                <button id="eraser">Eraser</button>
+            </div>
+            <div class="additional-tools">
+                <div class="canvas-size-slider-and-label">
+                    <label for="canvas-size-slider" id="canvas-size-slider-label">12 x 12</label>
+                    <input type="range" min="12" max="100" step="1" value="12" id="canvas-size-slider">
+                </div>
+                <div class="color-swatch-and-label">
+                    <div class="pen-swatch-and-label">
+                        <label for="pen-swatch">Pen</label>
+                        <input type="color" id="pen-swatch" value="#e5a632">
+                    </div>
+                    <div class="canvas-swatch-and-label">
+                        <label for="canvas-swatch">Canvas</label>
+                        <input type="color" id="canvas-swatch" value="#FFD9A3">
+                    </div>
+                </div>
+                <div class="toggle-grid-and-label">
+                    <label for="toggle-grid" class="toggle-grid-label">Gridlines
+                        <input type="checkbox" id="toggle-grid">
+                        <span class="toggle-grid-slide"><span class="toggle-grid-circle"></span>
+                        </span>
+                    </label>
+                </div>
+                <button id="clear">Clear</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
