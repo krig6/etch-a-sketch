@@ -6,6 +6,10 @@ Welcome to my implementation of the classic children's drawing toy. This web app
 
 You can unleash your creativity [here](https://krig6.github.io/etch-a-sketch/).
 
+## Sample Art
+
+[[Iron Man]](./sample-ironman.png)
+
 ## Technologies Used
 
 - HTML: Provides the structure and layout of the web page.
