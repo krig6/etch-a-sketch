@@ -25,7 +25,7 @@ You can unleash your creativity [here](https://krig6.github.io/etch-a-sketch/).
 
 ## Learning Path
 
-"In the process of developing this project, I encountered various challenges that deepened my understanding of JavaScript functions and event listeners. One particular problem involved implementing the clicking logic for each button, where the first click will initiate coloring, and hovering continued the coloring process, while the second click stops it. Overcoming this hurdle required sweat, tears and learning from external resources. I watched tutorials and examined other developers' code to gain insights. Through this process, I not only resolved the issue of button overlap and compromised functionality but also enhanced my proficiency in JavaScript programming. This experience reinforced the importance of resourcefulness and continuous learning in my journey as a developer."
+In the process of developing this project, I encountered various challenges that deepened my understanding of JavaScript functions and event listeners. One particular problem involved implementing the clicking logic for each button, where the first click will initiate coloring, and hovering continued the coloring process, while the second click stops it. Overcoming this hurdle required sweat, tears and learning from external resources. I watched tutorials and examined other developers' code to gain insights. Through this process, I not only resolved the issue of button overlap and compromised functionality but also enhanced my proficiency in JavaScript programming. This experience reinforced the importance of resourcefulness and continuous learning in my journey as a developer.
 
 ## Future Enhancements
 
