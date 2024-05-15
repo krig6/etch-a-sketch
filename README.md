@@ -6,9 +6,13 @@ Welcome to my implementation of the classic children's drawing toy. This web app
 
 You can unleash your creativity [here](https://krig6.github.io/etch-a-sketch/).
 
+## Visual Overview
+
+![UI-Preview](./images/ui-preview.png)
+
 ## Sample Art
 
-![Iron Man](./sample-ironman.png)
+![Monkey D. Luffy](./images/sample-art.png)
 
 ## Technologies Used
 
