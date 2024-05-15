@@ -1,53 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Etch-a-Sketch</title>
+
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="./logo/logo.png" type="image">
-</head>
+    <link rel="icon" href="./logo/logo.png" type="image" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div class="title-and-canvas">
-            <div class="title">Etch-a-Sketch</div>
-            <div class="canvas"></div>
+      <div class="title-and-canvas">
+        <div class="title">Etch-a-Sketch</div>
+        <div class="canvas"></div>
+      </div>
+      <div class="tools">
+        <div class="drawing-buttons">
+          <button id="pen">Pen</button>
+          <button id="random">Random</button>
+          <button id="eraser">Eraser</button>
         </div>
-        <div class="tools">
-            <div class="drawing-buttons">
-                <button id="pen">Pen</button>
-                <button id="random">Random</button>
-                <button id="eraser">Eraser</button>
+        <div class="additional-tools">
+          <div class="canvas-size-slider-and-label">
+            <label for="canvas-size-slider" id="canvas-size-slider-label"
+              >10 x 10</label
+            >
+            <input
+              type="range"
+              min="10"
+              max="100"
+              step="10"
+              value="10"
+              id="canvas-size-slider"
+            />
+          </div>
+          <div class="color-swatch-and-label">
+            <div class="pen-swatch-and-label">
+              <label for="pen-swatch">Pen</label>
+              <input type="color" id="pen-swatch" value="#e5a632" />
             </div>
-            <div class="additional-tools">
-                <div class="canvas-size-slider-and-label">
-                    <label for="canvas-size-slider" id="canvas-size-slider-label">12 x 12</label>
-                    <input type="range" min="12" max="100" step="1" value="12" id="canvas-size-slider">
-                </div>
-                <div class="color-swatch-and-label">
-                    <div class="pen-swatch-and-label">
-                        <label for="pen-swatch">Pen</label>
-                        <input type="color" id="pen-swatch" value="#e5a632">
-                    </div>
-                    <div class="canvas-swatch-and-label">
-                        <label for="canvas-swatch">Canvas</label>
-                        <input type="color" id="canvas-swatch" value="#FFD9A3">
-                    </div>
-                </div>
-                <div class="toggle-grid-and-label">
-                    <label for="toggle-grid" class="toggle-grid-label">Gridlines
-                        <input type="checkbox" id="toggle-grid">
-                        <span class="toggle-grid-slide"><span class="toggle-grid-circle"></span>
-                        </span>
-                    </label>
-                </div>
-                <button id="clear">Clear</button>
+            <div class="canvas-swatch-and-label">
+              <label for="canvas-swatch">Canvas</label>
+              <input type="color" id="canvas-swatch" value="#FFD9A3" />
             </div>
+          </div>
+          <div class="toggle-grid-and-label">
+            <label for="toggle-grid" class="toggle-grid-label"
+              >Gridlines
+              <input type="checkbox" id="toggle-grid" />
+              <span class="toggle-grid-slide"
+                ><span class="toggle-grid-circle"></span>
+              </span>
+            </label>
+          </div>
+          <button id="clear">Clear</button>
+          <button id="save">Save</button>
         </div>
+      </div>
     </div>
-    <script src="script.js"></script>
-</body>
 
+    <script src="script.js"></script>
+  </body>
 </html>

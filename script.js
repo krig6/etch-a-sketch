@@ -7,6 +7,7 @@ const canvasSwatch = document.querySelector('#canvas-swatch');
 const canvasSizeSlider = document.querySelector('#canvas-size-slider');
 const canvasSizeSliderLabel = document.querySelector('#canvas-size-slider-label');
 const gridlinesToggle = document.querySelector('#toggle-grid');
+const saveButton = document.querySelector('#save');
 
 // Initial grid
 createGrid(canvasSizeSlider.value);
@@ -56,6 +57,8 @@ buttons.addEventListener('click', (event) => {
 });
 
 // Event listeners for other buttons
+saveButton.addEventListener('click', saveAsImage);
+
 canvasSwatch.addEventListener('change', () => {
     createGrid(canvasSizeSlider.value);
 });
@@ -154,3 +157,59 @@ function eraseGrid(e) {
 function eraseColor(e) {
     e.target.style.backgroundColor = canvasSwatch.value;
 }
+
+function saveAsImage() {
+
+    // Create a temporary canvas element
+    const tempCanvas = document.createElement('canvas');
+
+    // Get the 2D rendering context of the temporary canvas
+    const tempCtx = tempCanvas.getContext('2d');
+
+    // Get the dimensions of the canvas
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+
+    // Set the dimensions of the temporary canvas
+    tempCanvas.width = width;
+    tempCanvas.height = height;
+
+    // Clear the temporary canvas
+    tempCtx.clearRect(0, 0, width, height);
+
+    // Get the position of the canvas relative to the document
+    const canvasRect = canvas.getBoundingClientRect();
+    const canvasLeft = canvasRect.left;
+    const canvasTop = canvasRect.top;
+
+    // Draw the grid content onto the temporary canvas
+    const gridItems = document.querySelectorAll('.box');
+    gridItems.forEach((item) => {
+
+        // Get the computed style of the grid item
+        const style = window.getComputedStyle(item);
+
+        // Get the background color of the grid item
+        const bgColor = style.getPropertyValue('background-color');
+
+        // Ensure background color is fully opaque
+        tempCtx.fillStyle = bgColor.includes('rgba') ? '#ffffff' : bgColor;
+
+        // Calculate the position and size of the box relative to the canvas
+        const boxLeft = Math.round(item.offsetLeft - canvasLeft);
+        const boxTop = Math.round(item.offsetTop - canvasTop);
+        const boxWidth = Math.round(item.offsetWidth);
+        const boxHeight = Math.round(item.offsetHeight);
+        tempCtx.fillRect(boxLeft, boxTop, boxWidth, boxHeight);
+    });
+
+    // Convert canvas content into an image
+    const image = tempCanvas.toDataURL('image/png');
+
+    // Create a link element to download the image
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'amazing_art.png';
+    link.click();
+}
+

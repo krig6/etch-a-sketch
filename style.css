@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  margin: 0;
   padding: 0;
 }
 
@@ -17,12 +16,14 @@ body {
   background-color: #73bda8;
   color: #ece6c2;
   font-family: "EASTRIAL";
+  overflow: hidden;
 }
 
 .title {
   display: flex;
   justify-content: center;
   font-size: 55px;
+  letter-spacing: 0.5rem;
   margin-bottom: 15px;
 }
 
@@ -30,7 +31,6 @@ body {
   display: grid;
   height: 600px;
   width: 600px;
-  border: 5px solid #6f5643;
 }
 
 .canvas.gridlines > div {
